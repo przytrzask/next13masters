@@ -1,3 +1,3 @@
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-	return <div>{children}</div>;
+	return <article className="prose lg:prose-xl mx-auto">{children}</article>;
 }
