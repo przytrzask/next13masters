@@ -1,19 +1,19 @@
-import { NavItem } from "../atoms/LinkItem";
+import { ActiveLink } from "../atoms/ActiveLink";
 
 const navigation = [
 	{
-		name: "Homepage",
+		name: "Home",
 		href: "/",
 	},
 	{
-		name: "Products",
+		name: "All",
 		href: "/products",
 	},
 	{
 		name: "Terms and conditions",
 		href: "/terms",
 	},
-];
+] as const;
 
 export const NavigationList = () => {
 	return (
@@ -24,7 +24,14 @@ export const NavigationList = () => {
 			<div className="flex flex-1">
 				<div className="hidden lg:flex lg:gap-x-12">
 					{navigation.map((item) => (
-						<NavItem key={item.name} item={item} />
+						<ActiveLink
+							key={item.name}
+							href={item.href}
+							activeClassName="border-indigo-500 text-indigo-600 border-b-2"
+							className="text-sm font-semibold leading-6 text-gray-900"
+						>
+							{item.name}
+						</ActiveLink>
 					))}
 				</div>
 			</div>

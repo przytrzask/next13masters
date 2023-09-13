@@ -23,10 +23,19 @@ const productResponseToProduct = (product: Product): ProductType => ({
 	category: product.category,
 	price: product.price,
 	id: product.id,
+	description: product.description,
 });
 
-export const getProducts = async () => {
-	const res = await fetch("https://naszsklep-api.vercel.app/api/products");
+const sizeLimit = 4;
+
+export const getProducts = async (page: string) => {
+	const res = await fetch(
+		"https://naszsklep-api.vercel.app/api/products?offset=" +
+			Number(page) * sizeLimit +
+			"&limit=" +
+			sizeLimit +
+			"",
+	);
 
 	const productsResponse = (await res.json()) as Product[];
 
