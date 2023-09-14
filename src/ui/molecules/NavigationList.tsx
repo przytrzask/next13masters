@@ -7,7 +7,7 @@ const navigation = [
 	},
 	{
 		name: "All",
-		href: "/products",
+		href: "/products/1",
 	},
 	{
 		name: "Terms and conditions",

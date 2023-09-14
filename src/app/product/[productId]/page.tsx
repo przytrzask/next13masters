@@ -11,8 +11,8 @@ type ProductProps = {
 	};
 };
 
-export async function getStaticParams() {
-	const products = await getProducts();
+export async function generateStaticParams() {
+	const products = await getProducts("1");
 
 	return products.map((product) => ({
 		productId: product.id,
@@ -21,10 +21,10 @@ export async function getStaticParams() {
 
 function prodOnly<TParams extends unknown[], TReturn>(func: (...args: TParams) => TReturn) {
 	return (...args: TParams) => {
-		if (process.env.NODE_ENV === "development") {
+		if (process.env.NODE_ENV === "production") {
 			return func(...args);
 		} else {
-			return Promise.resolve([]);
+			return {};
 		}
 	};
 }

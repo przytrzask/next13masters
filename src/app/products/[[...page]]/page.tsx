@@ -20,7 +20,7 @@ export default async function Products({
 					<h2 className="text-2xl font-bold tracking-tight text-gray-900">Products</h2>
 					<ProductList products={products} />
 					<div className="mt-2">
-						<Pagination activePage={page} />
+						<Pagination />
 					</div>
 				</div>
 			</section>
