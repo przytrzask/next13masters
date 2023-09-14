@@ -4,14 +4,17 @@ const navigation = [
 	{
 		name: "Home",
 		href: "/",
+		exact: true,
 	},
 	{
 		name: "All",
-		href: "/products/1",
+		href: "/products",
+		exact: false,
 	},
 	{
 		name: "Terms and conditions",
 		href: "/terms",
+		exact: true,
 	},
 ] as const;
 
@@ -29,6 +32,7 @@ export const NavigationList = () => {
 							href={item.href}
 							activeClassName="border-indigo-500 text-indigo-600 border-b-2"
 							className="text-sm font-semibold leading-6 text-gray-900"
+							exact={item.exact}
 						>
 							{item.name}
 						</ActiveLink>

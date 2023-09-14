@@ -35,13 +35,13 @@ type Params = {
 	};
 };
 
-export const generateMetadata = prodOnly(async ({ params }: Params): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: Params): Promise<Metadata> => {
 	const product = await getProductById(params.productId);
 	return {
 		title: product.name,
 		description: product.description,
 	};
-});
+};
 
 export default async function Product({ params: { productId } }: ProductProps) {
 	const product = await getProductById(productId);
