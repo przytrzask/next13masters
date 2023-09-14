@@ -19,15 +19,15 @@ export async function generateStaticParams() {
 	}));
 }
 
-function prodOnly<TParams extends unknown[], TReturn>(func: (...args: TParams) => TReturn) {
-	return (...args: TParams) => {
-		if (process.env.NODE_ENV === "production") {
-			return func(...args);
-		} else {
-			return {};
-		}
-	};
-}
+// function prodOnly<TParams extends unknown[], TReturn>(func: (...args: TParams) => TReturn) {
+// 	return (...args: TParams) => {
+// 		if (process.env.NODE_ENV === "production") {
+// 			return func(...args);
+// 		} else {
+// 			return {};
+// 		}
+// 	};
+// }
 
 type Params = {
 	params: {
