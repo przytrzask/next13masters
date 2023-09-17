@@ -14,7 +14,7 @@ const config: Config = {
 			},
 		},
 	},
-	plugins: [require("@tailwindcss/aspect-ratio")],
+	plugins: [require("@tailwindcss/aspect-ratio"), require("@tailwindcss/typography")],
 };
 // eslint-disable-next-line import/no-default-export
 export default config;
