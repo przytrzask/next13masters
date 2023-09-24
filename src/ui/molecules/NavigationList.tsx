@@ -16,6 +16,16 @@ const navigation = [
 		href: "/terms",
 		exact: true,
 	},
+	{
+		name: "T-shirts",
+		href: "/categories/t_shirts",
+		exact: false,
+	},
+	{
+		name: "Shoes",
+		href: "/categories/shoes",
+		exact: false,
+	},
 ] as const;
 
 export const NavigationList = () => {

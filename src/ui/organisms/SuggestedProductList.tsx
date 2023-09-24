@@ -1,10 +1,8 @@
 import { ProductList } from "./ProductList";
-import { getProducts } from "@/api/products";
+import { getProductsByCategorySlug } from "@/api/products";
 
 export async function SuggestedProductList() {
-	const relatedProducts = await getProducts("1");
+	const { data } = await getProductsByCategorySlug({ slug: "t_shirts", skip: 0, take: 4 });
 
-	const limitedProducts = relatedProducts.slice(0, -4);
-
-	return <ProductList products={limitedProducts} />;
+	return <ProductList products={data} />;
 }

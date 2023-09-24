@@ -30,6 +30,7 @@ export function ActiveLink<T extends string>({
 			className={clsx(className, {
 				[activeClassName]: isActive,
 			})}
+			{...(isActive && { "aria-current": "page" })}
 		>
 			{children}
 		</Link>

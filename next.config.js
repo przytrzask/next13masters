@@ -1,14 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	images: {
+		domains: ["fdofbujfshszxgmmurqb.supabase.co"],
+	},
 	experimental: {
 		typedRoutes: true,
-		mdxRss: true,
+		mdxRs: true,
+		serverActions: true,
 	},
 	async redirects() {
 		return [
 			{
 				source: "/products",
 				destination: "/products/1",
+				permanent: false,
+			},
+			{
+				source: "/categories/:category",
+				destination: "/categories/:category/1",
 				permanent: false,
 			},
 		];
