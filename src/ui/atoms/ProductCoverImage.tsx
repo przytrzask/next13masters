@@ -7,6 +7,7 @@ export const ProductCoverImage = ({ alt, src }: { alt: string; src: string }) =>
 				src={src}
 				alt={alt}
 				className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+				fill
 			/>
 		</div>
 	);
