@@ -6,5 +6,10 @@ export async function SuggestedProductList() {
 
 	if (!products) return null;
 
-	return <ProductList products={products.data} />;
+	return (
+		<section data-testid="related-products" aria-labelledby="related-products">
+			<h2 id="related-products">Suggested products</h2>
+			<ProductList products={products.data} />;
+		</section>
+	);
 }

@@ -9,6 +9,13 @@ import { SizePicker } from "@/ui/organisms/SizePicker";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/orders";
 import { type SizeType, type ColorType } from "@/gql/graphql";
+import { Metadata } from "next";
+
+type Params = {
+	params: {
+		slug: string;
+	};
+};
 
 type ProductProps = {
 	params: {
@@ -27,18 +34,15 @@ export async function generateStaticParams() {
 	}));
 }
 
-// export const generateMetadata = async ({ params: { slug } }: Params): Promise<Metadata> => {
-// 	const product = await getProductBySlug(slug);
-// 	return {
-// 		title: product.name,
-// 		description: product.description,
-// 	};
-// };
+export const generateMetadata = async ({ params: { slug } }: Params): Promise<Metadata> => {
+	const product = await getProductBySlug(slug);
+	return {
+		title: product?.name,
+		description: product?.description,
+	};
+};
 
 export default async function Product({ params: { slug } }: ProductProps) {
-	console.log({
-		slug,
-	});
 	const product = await getProductBySlug(slug);
 
 	if (!product) notFound();

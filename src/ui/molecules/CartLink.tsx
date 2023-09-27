@@ -1,9 +1,9 @@
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { getCartFromcookies } from "@/api/orders";
+import { getCartFromCookies } from "@/api/orders";
 
 export const CartLink = async () => {
-	const cart = await getCartFromcookies();
+	const cart = await getCartFromCookies();
 
 	const sum = cart?.orderItems.reduce((acc, cur) => acc + cur.quantity, 0);
 

@@ -2,11 +2,12 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { IncrementDecrementItem } from "./IncrementDecrementItem";
-import { RemmpveButton } from "./DeleteButton";
-import { getCartFromcookies } from "@/api/orders";
+import { RemoveButton } from "./DeleteButton";
+import { handleStripePaymentAction } from "./actions";
+import { getCartFromCookies } from "@/api/orders";
 
 export default async function Cart() {
-	const cart = await getCartFromcookies();
+	const cart = await getCartFromCookies();
 
 	if (!cart) {
 		redirect("/");
@@ -54,15 +55,14 @@ export default async function Cart() {
 											</div>
 
 											<div className="mt-4 sm:mt-0 sm:pr-9">
-												{/* <label htmlFor={`quantity-${productIdx}`} className="sr-only">
+												<label htmlFor={`quantity-${orderItem.id}`} className="sr-only">
 													Quantity, {orderItem.name}
-												</label> */}
+												</label>
 												<IncrementDecrementItem
 													itemId={orderItem.id}
 													quantity={orderItem.quantity}
 												/>
-
-												<RemmpveButton itemId={orderItem.id} />
+												<RemoveButton itemId={orderItem.id} />
 											</div>
 										</div>
 									</div>
@@ -111,14 +111,21 @@ export default async function Cart() {
 							</div>
 						</dl>
 
-						<div className="mt-6">
+						<form
+							action={async () => {
+								"use server";
+								await handleStripePaymentAction();
+							}}
+							className="mt-6"
+						>
 							<button
+								data-testid="add-to-cart-button"
 								type="submit"
 								className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
 							>
 								Checkout
 							</button>
-						</div>
+						</form>
 					</section>
 				</div>
 			</div>

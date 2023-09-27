@@ -3,6 +3,19 @@ import { getProductsByCategorySlug } from "@/api/products";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { Pagination } from "@/ui/molecules/Pagination";
 
+type Params = {
+	params: {
+		category: "shoes" | "t_shirts";
+		page: string;
+	};
+};
+
+export const generateMetadata = async ({ params }: Params) => {
+	return {
+		title: params.category,
+	};
+};
+
 export default async function CategoryPage({
 	params: { category, page },
 }: {

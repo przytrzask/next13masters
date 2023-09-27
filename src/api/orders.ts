@@ -12,7 +12,7 @@ import {
 
 export async function getOrCreateCart() {
 	{
-		const cart = await getCartFromcookies();
+		const cart = await getCartFromCookies();
 		if (cart) {
 			return cart;
 		}
@@ -54,7 +54,7 @@ export async function addProductToCart(
 	return cart;
 }
 
-export async function getCartFromcookies() {
+export async function getCartFromCookies() {
 	const cartId = cookies().get("cartId")?.value;
 
 	if (cartId) {
@@ -63,7 +63,7 @@ export async function getCartFromcookies() {
 			variables: {
 				id: cartId,
 			},
-			cache: "no-store",
+			// cache: "no-store",
 		});
 		if (cart) {
 			return cart;

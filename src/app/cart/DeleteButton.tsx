@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { removeItem } from "./actions";
 
-export const RemmpveButton = ({ itemId }: { itemId: string }) => {
+export const RemoveButton = ({ itemId }: { itemId: string }) => {
 	const [isPendingTransition, startTransition] = useTransition();
 
 	const router = useRouter();

@@ -18,7 +18,7 @@ export const SearchInput = () => {
 	const debounced = useMemo(
 		() =>
 			debounce((val: string) => {
-				const url = `${pathname}?${new URLSearchParams({ search: val }).toString()}`;
+				const url = `${pathname}?${new URLSearchParams({ query: val }).toString()}`;
 
 				// @ts-expect-error TODO: fix this
 				router.push(url, { shallow: true });
