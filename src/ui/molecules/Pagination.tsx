@@ -5,7 +5,7 @@ import { ActiveLink } from "../atoms/ActiveLink";
 type PaginationProps = {
 	count?: number | null;
 	perpage: number;
-	alias: "products" | "categories/t_shirt" | "categories/shoe";
+	alias: "products" | "categories/t_shirts" | "categories/shoes";
 };
 
 export const Pagination = ({ alias, count = 0, perpage }: PaginationProps) => {

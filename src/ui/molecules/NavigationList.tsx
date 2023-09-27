@@ -1,4 +1,5 @@
 import { ActiveLink } from "../atoms/ActiveLink";
+import { CartLink } from "./CartLink";
 
 const navigation = [
 	{
@@ -48,6 +49,7 @@ export const NavigationList = () => {
 						</ActiveLink>
 					))}
 				</div>
+				<CartLink />
 			</div>
 		</nav>
 	);

@@ -1,16 +1,14 @@
-import clsx from "clsx";
 import { Suspense } from "react";
-import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 import { getProductBySlug, getProductsList } from "@/api/products";
 import { SuggestedProductList } from "@/ui/organisms/SuggestedProductList";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { ColorPicker } from "@/ui/organisms/ColorPicker";
 import { SizePicker } from "@/ui/organisms/SizePicker";
-import { fetchGraphql } from "@/api/fetchGraphql";
-import { CartAddItemDocument, CartCreateDocument, CartGetByIdDocument } from "@/gql/graphql";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
+import { addProductToCart, getOrCreateCart } from "@/api/orders";
+import { type SizeType, type ColorType } from "@/gql/graphql";
 
 type ProductProps = {
 	params: {
@@ -45,14 +43,21 @@ export default async function Product({ params: { slug } }: ProductProps) {
 
 	if (!product) notFound();
 
-	async function addToCartFunction(formData: FormData) {
+	const addToCartFunction = async (formData: FormData) => {
 		"use server";
-		console.log(formData);
+
+		const color = formData.get("color") as ColorType;
+		const size = formData.get("size") as SizeType;
 
 		const cart = await getOrCreateCart();
 
-		await addProductToCart(cart.id, product?.id);
-	}
+		await addProductToCart(cart.id, product?.id, {
+			color,
+			size,
+		});
+
+		revalidateTag("cart");
+	};
 
 	return (
 		<div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
@@ -76,7 +81,6 @@ export default async function Product({ params: { slug } }: ProductProps) {
 					{/* Product details */}
 					<div className="mt-10">
 						<h2 className="text-bold text-lg font-medium text-gray-900">Opis</h2>
-
 						<div
 							className="prose prose-lg mt-4 text-gray-700"
 							dangerouslySetInnerHTML={{
@@ -91,41 +95,4 @@ export default async function Product({ params: { slug } }: ProductProps) {
 			</Suspense>
 		</div>
 	);
-}
-
-// …
-
-async function getOrCreateCart() {
-	const cartId = cookies().get("cartId")?.value;
-
-	if (cartId) {
-		const { order: cart } = await fetchGraphql(CartGetByIdDocument, {
-			id: cartId,
-		});
-		if (cart) {
-			return cart;
-		}
-	}
-
-	const { createOrder: newCart } = await fetchGraphql(CartCreateDocument, {
-		total: 0,
-	});
-	if (!newCart) {
-		throw new Error("Failed to create cart");
-	}
-
-	cookies().set("cartId", newCart.id, {
-		sameSite: "lax",
-		httpOnly: true,
-	});
-	return newCart;
-}
-
-async function addProductToCart(cartId: string, productId: string) {
-	const cart = await fetchGraphql(CartAddItemDocument, {
-		cartId,
-		productId,
-	});
-
-	return cart.createOrderItem;
 }

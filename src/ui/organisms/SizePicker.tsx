@@ -14,7 +14,7 @@ export const SizePicker = ({ product }: { product: ProductListItemFragment }) =>
 				<h3 className="text-sm font-medium text-gray-900">Size</h3>
 			</div>
 
-			<RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-2">
+			<RadioGroup name="size" value={selectedSize} onChange={setSelectedSize} className="mt-2">
 				<RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
 				<div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
 					{product.sizes.map((size) => (

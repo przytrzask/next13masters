@@ -8,9 +8,11 @@ export default async function Products({
 	params,
 	searchParams,
 }: {
+	searchParams: {
+		[search: string]: string | string[];
+	};
 	params: {
 		page: string[];
-		searchParams: string[];
 	};
 }) {
 	const page = params["page"]?.[0] ?? 1;
@@ -19,7 +21,7 @@ export default async function Products({
 
 	const skip = perpage * (Number(page) - 1);
 
-	const search = searchParams?.["search"];
+	const search = searchParams?.["search"] as string;
 
 	const { data, count } = await getProductsList({
 		take: perpage,

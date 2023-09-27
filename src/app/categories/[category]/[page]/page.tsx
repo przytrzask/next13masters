@@ -10,15 +10,13 @@ export default async function CategoryPage({
 }) {
 	const perpage = 4;
 
-	console.log({ category });
-
-	const { data, count } = await getProductsByCategorySlug({
+	const products = await getProductsByCategorySlug({
 		slug: category,
 		take: 2,
 		skip: 2 * (Number(page) - 1),
 	});
 
-	if (!data) throw notFound();
+	if (!products?.data) throw notFound();
 
 	return (
 		<section className="bg-white" aria-labelledby="category_heading">
@@ -26,9 +24,9 @@ export default async function CategoryPage({
 				<h2 id="category_heading" className="text-2xl font-bold tracking-tight text-gray-900">
 					{category}
 				</h2>
-				<ProductList products={data} />
+				<ProductList products={products.data} />
 				<div className="mt-2">
-					<Pagination alias={`categories/${category}`} count={count} perpage={perpage} />
+					<Pagination alias={`categories/${category}`} count={products.count} perpage={perpage} />
 				</div>
 			</div>
 		</section>

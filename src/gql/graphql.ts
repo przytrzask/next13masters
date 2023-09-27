@@ -46,6 +46,10 @@ export type Color = {
   id: Scalars['ID']['output'];
 };
 
+export type ColorConnectInput = {
+  connect: ColorType;
+};
+
 export type ColorType =
   | 'BLACK'
   | 'BLUE'
@@ -59,13 +63,15 @@ export type ConnectIdInput = {
 };
 
 export type CreateOrderInput = {
-  total: Scalars['Int']['input'];
+  total: Scalars['Int']['output'];
 };
 
 export type CreateOrderItemInput = {
+  color: ColorConnectInput;
   order: OrderConnectInput;
   product: ProductConnectInput;
   quantity: Scalars['Int']['input'];
+  size: SizeConnectInput;
 };
 
 export type Image = {
@@ -76,6 +82,8 @@ export type Image = {
 export type Mutation = {
   createOrder?: Maybe<Order>;
   createOrderItem?: Maybe<Order>;
+  deleteOrderItem?: Maybe<OrderItem>;
+  updateOrderItem?: Maybe<OrderItem>;
 };
 
 
@@ -86,6 +94,17 @@ export type MutationCreateOrderArgs = {
 
 export type MutationCreateOrderItemArgs = {
   data: CreateOrderItemInput;
+};
+
+
+export type MutationDeleteOrderItemArgs = {
+  where: UpdateOrderItemWhereInput;
+};
+
+
+export type MutationUpdateOrderItemArgs = {
+  data: UpdateOrderItemInput;
+  where: UpdateOrderItemWhereInput;
 };
 
 export type Order = {
@@ -102,8 +121,14 @@ export type OrderConnectInput = {
 };
 
 export type OrderItem = {
-  product: Product;
+  color: Color;
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  image: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  price: Scalars['Int']['output'];
   quantity: Scalars['Int']['output'];
+  size: Size;
 };
 
 export type OrderStatus =
@@ -161,7 +186,7 @@ export type QueryCategoriesArgs = {
 
 export type QueryOrderArgs = {
   id: Scalars['ID']['input'];
-  status: OrderStatus;
+  status?: InputMaybe<OrderStatus>;
 };
 
 
@@ -188,19 +213,42 @@ export type Size = {
   size: SizeType;
 };
 
+export type SizeConnectInput = {
+  connect: SizeType;
+};
+
 export type SizeType =
   | 'L'
   | 'M'
   | 'S'
   | 'XL';
 
-export type CartAddItemMutationVariables = Exact<{
-  cartId: Scalars['ID']['input'];
+export type UpdateOrderItemInput = {
+  quantity: Scalars['Int']['input'];
+};
+
+export type UpdateOrderItemWhereInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type AddOrderItemMutationVariables = Exact<{
+  quantity: Scalars['Int']['input'];
+  orderId: Scalars['ID']['input'];
   productId: Scalars['ID']['input'];
+  color: ColorType;
+  size: SizeType;
 }>;
 
 
-export type CartAddItemMutation = { createOrderItem?: { id: string } | null };
+export type AddOrderItemMutation = { createOrderItem?: { id: string } | null };
+
+export type CartChangeItemQuantityMutationVariables = Exact<{
+  quantity: Scalars['Int']['input'];
+  itemId: Scalars['ID']['input'];
+}>;
+
+
+export type CartChangeItemQuantityMutation = { updateOrderItem?: { quantity: number } | null };
 
 export type CartCreateMutationVariables = Exact<{
   total: Scalars['Int']['input'];
@@ -214,7 +262,14 @@ export type CartGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type CartGetByIdQuery = { order?: { id: string, orderItems: Array<{ quantity: number, product: { id: string, name: string, slug: string, description: string, price: number, images: Array<{ url: string }>, categories: Array<{ id: string, name: CategoryName }>, colors: Array<{ id: string, color: ColorType }>, sizes: Array<{ id: string, size: SizeType }> } }> } | null };
+export type CartGetByIdQuery = { order?: { id: string, orderItems: Array<{ quantity: number, id: string, name: string, price: number, description: string, image: string, color: { color: ColorType }, size: { size: SizeType } }> } | null };
+
+export type CartRemoveItemMutationVariables = Exact<{
+  itemId: Scalars['ID']['input'];
+}>;
+
+
+export type CartRemoveItemMutation = { deleteOrderItem?: { id: string } | null };
 
 export type ProductGetBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -281,15 +336,22 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
-export const CartAddItemDocument = new TypedDocumentString(`
-    mutation CartAddItem($cartId: ID!, $productId: ID!) {
+export const AddOrderItemDocument = new TypedDocumentString(`
+    mutation AddOrderItem($quantity: Int!, $orderId: ID!, $productId: ID!, $color: ColorType!, $size: SizeType!) {
   createOrderItem(
-    data: {quantity: 1, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}
+    data: {quantity: $quantity, order: {connect: {id: $orderId}}, product: {connect: {id: $productId}}, color: {connect: $color}, size: {connect: $size}}
   ) {
     id
   }
 }
-    `) as unknown as TypedDocumentString<CartAddItemMutation, CartAddItemMutationVariables>;
+    `) as unknown as TypedDocumentString<AddOrderItemMutation, AddOrderItemMutationVariables>;
+export const CartChangeItemQuantityDocument = new TypedDocumentString(`
+    mutation CartChangeItemQuantity($quantity: Int!, $itemId: ID!) {
+  updateOrderItem(data: {quantity: $quantity}, where: {id: $itemId}) {
+    quantity
+  }
+}
+    `) as unknown as TypedDocumentString<CartChangeItemQuantityMutation, CartChangeItemQuantityMutationVariables>;
 export const CartCreateDocument = new TypedDocumentString(`
     mutation CartCreate($total: Int!) {
   createOrder(total: $total) {
@@ -303,34 +365,28 @@ export const CartGetByIdDocument = new TypedDocumentString(`
     id
     orderItems {
       quantity
-      product {
-        ...ProductListItem
+      id
+      color {
+        color
       }
+      size {
+        size
+      }
+      name
+      price
+      description
+      image
     }
   }
 }
-    fragment ProductListItem on Product {
-  id
-  name
-  slug
-  description
-  price
-  images(first: 10) {
-    url
-  }
-  categories(first: 10) {
+    `) as unknown as TypedDocumentString<CartGetByIdQuery, CartGetByIdQueryVariables>;
+export const CartRemoveItemDocument = new TypedDocumentString(`
+    mutation CartRemoveItem($itemId: ID!) {
+  deleteOrderItem(where: {id: $itemId}) {
     id
-    name
   }
-  colors {
-    id
-    color
-  }
-  sizes {
-    id
-    size
-  }
-}`) as unknown as TypedDocumentString<CartGetByIdQuery, CartGetByIdQueryVariables>;
+}
+    `) as unknown as TypedDocumentString<CartRemoveItemMutation, CartRemoveItemMutationVariables>;
 export const ProductGetBySlugDocument = new TypedDocumentString(`
     query ProductGetBySlug($slug: String!) {
   productBySlug(slug: $slug) {

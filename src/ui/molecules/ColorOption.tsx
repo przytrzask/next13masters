@@ -1,6 +1,6 @@
 import { RadioGroup } from "@headlessui/react";
 import clsx from "clsx";
-import { type ColorType } from "@/gql/graphql";
+import { type ColorType, type Color } from "@/gql/graphql";
 
 const colorMap: {
 	[key in ColorType]: string;
@@ -13,7 +13,7 @@ const colorMap: {
 	WHITE: "bg-white",
 };
 
-export const RadioGroupOption = ({ color }: { color: ColorType }) => {
+export const RadioGroupOption = ({ color }: { color: Color }) => {
 	return (
 		<RadioGroup.Option
 			key={color.id}

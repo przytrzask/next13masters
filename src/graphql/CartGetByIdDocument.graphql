@@ -3,9 +3,17 @@ query CartGetById($id: ID!) {
 		id
 		orderItems {
 			quantity
-			product {
-				...ProductListItem
+			id
+			color {
+				color
 			}
+			size {
+				size
+			}
+			name
+			price
+			description
+			image
 		}
 	}
 }

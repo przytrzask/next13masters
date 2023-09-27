@@ -20,6 +20,7 @@ export const SearchInput = () => {
 			debounce((val: string) => {
 				const url = `${pathname}?${new URLSearchParams({ search: val }).toString()}`;
 
+				// @ts-expect-error TODO: fix this
 				router.push(url, { shallow: true });
 			}, 500),
 		[pathname, router],

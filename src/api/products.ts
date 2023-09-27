@@ -1,4 +1,4 @@
-import { fetchGraphql } from "./fetchGraphql";
+import { executeGraphQl } from "./executeGraphQl";
 import {
 	ProductsGetListDocument,
 	ProductGetBySlugDocument,
@@ -6,8 +6,14 @@ import {
 } from "@/gql/graphql";
 
 export const getProductBySlug = async (slug: string) => {
-	const graphqlResponse = await fetchGraphql(ProductGetBySlugDocument, {
-		slug,
+	const graphqlResponse = await executeGraphQl({
+		query: ProductGetBySlugDocument,
+		variables: {
+			slug,
+		},
+		next: {
+			revalidate: 2,
+		},
 	});
 
 	return graphqlResponse.productBySlug;
@@ -22,10 +28,13 @@ export const getProductsList = async ({
 	skip: number;
 	search?: string;
 }) => {
-	const graphqlResponse = await fetchGraphql(ProductsGetListDocument, {
-		take,
-		skip,
-		...(search && { search }),
+	const graphqlResponse = await executeGraphQl({
+		query: ProductsGetListDocument,
+		variables: {
+			take,
+			skip,
+			...(search && { search }),
+		},
 	});
 
 	return graphqlResponse.products;
@@ -40,10 +49,13 @@ export const getProductsByCategorySlug = async ({
 	skip: number;
 	slug: string;
 }) => {
-	const graphqlResponse = await fetchGraphql(ProductsByCategorySlugDocument, {
-		take,
-		skip,
-		slug,
+	const graphqlResponse = await executeGraphQl({
+		query: ProductsByCategorySlugDocument,
+		variables: {
+			take,
+			skip,
+			slug,
+		},
 	});
 
 	return graphqlResponse.productsByCategorySlug;
