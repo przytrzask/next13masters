@@ -1,7 +1,8 @@
+import { type Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { revalidateTag } from "next/cache";
-import { getProductBySlug, getProductsList } from "@/api/products";
+import { getProductBySlug } from "@/api/products";
 import { SuggestedProductList } from "@/ui/organisms/SuggestedProductList";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { ColorPicker } from "@/ui/organisms/ColorPicker";
@@ -9,7 +10,8 @@ import { SizePicker } from "@/ui/organisms/SizePicker";
 import { AddToCartButton } from "@/ui/atoms/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/orders";
 import { type SizeType, type ColorType } from "@/gql/graphql";
-import { Metadata } from "next";
+import { ProductReviewsList } from "@/ui/organisms/ProductReviewsList";
+import { ProductReviewsForm } from "@/ui/organisms/ProductReviewsForm";
 
 type Params = {
 	params: {
@@ -23,24 +25,24 @@ type ProductProps = {
 	};
 };
 
-export async function generateStaticParams() {
-	const products = await getProductsList({
-		take: 10,
-		skip: 1,
-	});
+// export async function generateStaticParams() {
+// 	const products = await getProductsList({
+// 		take: 10,
+// 		skip: 1,
+// 	});
 
-	return products.data.map((product) => ({
-		productId: product.id,
-	}));
-}
+// 	return products.data.map((product) => ({
+// 		productId: product.id,
+// 	}));
+// }
 
-export const generateMetadata = async ({ params: { slug } }: Params): Promise<Metadata> => {
-	const product = await getProductBySlug(slug);
-	return {
-		title: product?.name,
-		description: product?.description,
-	};
-};
+// export const generateMetadata = async ({ params: { slug } }: Params): Promise<Metadata> => {
+// 	const product = await getProductBySlug(slug);
+// 	return {
+// 		title: product?.name,
+// 		description: product?.description,
+// 	};
+// };
 
 export default async function Product({ params: { slug } }: ProductProps) {
 	const product = await getProductBySlug(slug);
@@ -97,6 +99,10 @@ export default async function Product({ params: { slug } }: ProductProps) {
 			<Suspense>
 				<SuggestedProductList />
 			</Suspense>
+			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">
+				<ProductReviewsForm />
+				<ProductReviewsList id={product.id} />
+			</div>
 		</div>
 	);
 }

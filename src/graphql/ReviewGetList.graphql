@@ -1,0 +1,15 @@
+query ReviewGetList($productId: ID!) {
+	reviews(productId: $productId) {
+		id
+		productId
+		rating {
+			rating
+			title
+			description
+		}
+		user {
+			name
+			email
+		}
+	}
+}

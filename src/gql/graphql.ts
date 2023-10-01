@@ -80,10 +80,16 @@ export type Image = {
 };
 
 export type Mutation = {
+  addReview: Review;
   createOrder?: Maybe<Order>;
   createOrderItem?: Maybe<Order>;
   deleteOrderItem?: Maybe<OrderItem>;
   updateOrderItem?: Maybe<OrderItem>;
+};
+
+
+export type MutationAddReviewArgs = {
+  reviewInput: ReviewInput;
 };
 
 
@@ -176,6 +182,7 @@ export type Query = {
   productBySlug?: Maybe<Product>;
   products: Products;
   productsByCategorySlug?: Maybe<Products>;
+  reviews: Array<Review>;
 };
 
 
@@ -208,6 +215,34 @@ export type QueryProductsByCategorySlugArgs = {
   take: Scalars['Int']['input'];
 };
 
+
+export type QueryReviewsArgs = {
+  productId: Scalars['ID']['input'];
+};
+
+export type Rating = {
+  description: Scalars['String']['output'];
+  rating: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type Review = {
+  createdAt: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  productId: Scalars['ID']['output'];
+  rating?: Maybe<Rating>;
+  updatedAt: Scalars['String']['output'];
+  user?: Maybe<User>;
+};
+
+export type ReviewInput = {
+  description: Scalars['String']['input'];
+  product: ConnectIdInput;
+  rating: Scalars['Int']['input'];
+  title: Scalars['String']['input'];
+  user: UserConnectInput;
+};
+
 export type Size = {
   id: Scalars['ID']['output'];
   size: SizeType;
@@ -229,6 +264,17 @@ export type UpdateOrderItemInput = {
 
 export type UpdateOrderItemWhereInput = {
   id: Scalars['ID']['input'];
+};
+
+export type User = {
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type UserConnectInput = {
+  email: Scalars['String']['input'];
+  userName: Scalars['String']['input'];
 };
 
 export type AddOrderItemMutationVariables = Exact<{
@@ -297,6 +343,13 @@ export type ProductsGetListQueryVariables = Exact<{
 
 
 export type ProductsGetListQuery = { products: { count?: number | null, data: Array<{ id: string, name: string, slug: string, description: string, price: number, images: Array<{ url: string }>, categories: Array<{ id: string, name: CategoryName }>, colors: Array<{ id: string, color: ColorType }>, sizes: Array<{ id: string, size: SizeType }> }> } };
+
+export type ReviewGetListQueryVariables = Exact<{
+  productId: Scalars['ID']['input'];
+}>;
+
+
+export type ReviewGetListQuery = { reviews: Array<{ id: string, productId: string, rating?: { rating: number, title: string, description: string } | null, user?: { name: string, email: string } | null }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -477,3 +530,20 @@ export const ProductsGetListDocument = new TypedDocumentString(`
     size
   }
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
+export const ReviewGetListDocument = new TypedDocumentString(`
+    query ReviewGetList($productId: ID!) {
+  reviews(productId: $productId) {
+    id
+    productId
+    rating {
+      rating
+      title
+      description
+    }
+    user {
+      name
+      email
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ReviewGetListQuery, ReviewGetListQueryVariables>;

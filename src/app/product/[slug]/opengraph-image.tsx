@@ -1,5 +1,6 @@
-import { getProductBySlug } from "@/api/products";
 import { ImageResponse } from "next/server";
+
+import { getProductBySlug } from "@/api/products";
 
 export const runtime = "edge";
 
@@ -11,7 +12,13 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default async function og({ params }: any) {
+type Params = {
+	params: {
+		slug: string;
+	};
+};
+
+export default async function og({ params }: Params) {
 	const product = await getProductBySlug(params.slug);
 
 	if (!product) {
