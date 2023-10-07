@@ -48,6 +48,8 @@ const encodeOptionToURI = (option: Option) => {
 		.map(
 			// @ts-expect-error TODO fixme
 			(key: keyof typeof option.value) =>
+				// @ts-expect-error TODO fixme
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument
 				`${encodeURIComponent(key)}=${encodeURIComponent(option?.value?.[key])}`,
 		)
 		.join("&");
