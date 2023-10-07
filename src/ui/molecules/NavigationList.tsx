@@ -40,13 +40,12 @@ const navigation = [
 ] as const;
 
 export const NavigationList = async () => {
+	const cookieStore = cookies();
 	const supabase = createServerComponentClient<Database>({
-		cookies,
+		cookies: () => cookieStore,
 	});
 
 	const userSession = await supabase.auth.getSession();
-
-	console.table(userSession.data?.session?.user.user_metadata.avatar_url);
 
 	return (
 		<div className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">

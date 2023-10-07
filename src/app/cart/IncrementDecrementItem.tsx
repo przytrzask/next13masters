@@ -19,17 +19,13 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 		if (optimisticQuantity === 1) {
 			return;
 		}
-		try {
-			setQuantity(optimisticQuantity - 1);
-			await changeItemQuantity(itemId, optimisticQuantity - 1);
-		} catch (error) {}
+		setQuantity(optimisticQuantity - 1);
+		await changeItemQuantity(itemId, optimisticQuantity - 1);
 	};
 
 	const handleIncrement = async () => {
-		try {
-			setQuantity(optimisticQuantity + 1);
-			await changeItemQuantity(itemId, optimisticQuantity + 1);
-		} catch (error) {}
+		setQuantity(optimisticQuantity + 1);
+		await changeItemQuantity(itemId, optimisticQuantity + 1);
 	};
 
 	return (

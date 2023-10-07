@@ -11,6 +11,8 @@ import {
 } from "@/gql/graphql";
 
 export async function getOrCreateCart() {
+	const userCookies = cookies();
+
 	{
 		const cart = await getCartFromCookies();
 		if (cart) {
@@ -28,7 +30,7 @@ export async function getOrCreateCart() {
 		throw new Error("Failed to create cart");
 	}
 
-	cookies().set("cartId", cart.id, {
+	userCookies.set("cartId", cart.id, {
 		sameSite: "lax",
 		httpOnly: true,
 	});

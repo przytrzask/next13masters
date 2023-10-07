@@ -56,7 +56,7 @@ export const Collections = async () => {
 										src={collections[idx]?.imageSrc ?? ""}
 										alt={collections[idx]?.imageAlt ?? ""}
 										className="h-full w-full object-cover object-center"
-										layout="fill"
+										fill
 									/>
 								</div>
 								<h3 className="mt-6 text-sm text-gray-500">

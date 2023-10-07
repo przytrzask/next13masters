@@ -53,7 +53,7 @@ export function Decor() {
 					position: [0, 0, 2.5],
 					fov: 25,
 				}}
-				preserveDrawingl={{
+				preserveDrawing={{
 					preserveDrawingBuffer: true,
 				}}
 				eventPrefix="client"

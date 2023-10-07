@@ -32,7 +32,7 @@ export async function handleStripePaymentAction() {
 		apiVersion: "2023-08-16",
 		typescript: true,
 	});
-	const checkouSession = await stripe.checkout.sessions.create({
+	const checkoutSession = await stripe.checkout.sessions.create({
 		payment_method_types: ["card"],
 		mode: "payment",
 		success_url: `http://localhost:3000/cart/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -53,8 +53,8 @@ export async function handleStripePaymentAction() {
 		})),
 	});
 
-	if (checkouSession.url) {
+	if (checkoutSession.url) {
 		cookies().set("cartId", "");
-		redirect(checkouSession.url);
+		redirect(checkoutSession.url);
 	}
 }
