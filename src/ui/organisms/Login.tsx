@@ -7,7 +7,7 @@ export function Login() {
 	const supabase = createClientComponentClient<Database>();
 
 	const handleLogin = async () => {
-		const res = await supabase.auth.signInWithOAuth({
+		await supabase.auth.signInWithOAuth({
 			provider: "github",
 			options: {
 				redirectTo: "http://localhost:3000/auth/callback",
