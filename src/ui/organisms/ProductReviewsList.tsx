@@ -1,15 +1,16 @@
-import { StarIcon } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/20/solid";
+
 import clsx from "clsx";
 import { getReviewsByProductId } from "@/api/reviews";
 
 type ProductReviewsListProps = {
-	id: string;
+	productId: string;
 };
 
-export const ProductReviewsList = async ({ id }: ProductReviewsListProps) => {
-	if (!id) return null;
+export const ProductReviewsList = async ({ productId }: ProductReviewsListProps) => {
+	if (!productId) return null;
 
-	const realReviews = await getReviewsByProductId({ id });
+	const realReviews = await getReviewsByProductId({ id: productId });
 
 	return (
 		<div className="mt-16 lg:col-span-7 lg:col-start-6 lg:mt-0">
@@ -19,19 +20,19 @@ export const ProductReviewsList = async ({ id }: ProductReviewsListProps) => {
 					{realReviews.map((review) => (
 						<div key={review.id} className="py-12">
 							<div className="flex items-center">
-								<img
+								{/* <img
 									src={review.avatarSrc}
 									alt={`${review.author}.`}
 									className="h-12 w-12 rounded-full"
-								/>
+								/> */}
 								<div className="ml-4">
 									<h4 className="text-sm font-bold text-gray-900">{review.user?.name}</h4>
 									<div className="mt-1 flex items-center">
-										{[0, 1, 2, 3, 4].map((rating) => (
+										{[0, 1, 2, 3, 4].map((stars) => (
 											<StarIcon
-												key={rating}
+												key={stars}
 												className={clsx(
-													review.rating?.rating ?? 0 > rating ? "text-yellow-400" : "text-gray-300",
+													review?.rating?.rating ?? 0 > stars ? "text-yellow-400" : "text-gray-200",
 													"h-5 w-5 flex-shrink-0",
 												)}
 												aria-hidden="true"

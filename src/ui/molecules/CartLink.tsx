@@ -8,7 +8,7 @@ export const CartLink = async () => {
 	const sum = cart?.orderItems.reduce((acc, cur) => acc + cur.quantity, 0);
 
 	return (
-		<div className="ml-auto flow-root">
+		<div className=" flow-root">
 			<Link href="/cart" className="group -m-2 flex items-center p-2">
 				<ShoppingCartIcon
 					className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"

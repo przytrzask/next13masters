@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ["fdofbujfshszxgmmurqb.supabase.co"],
+		domains: [
+			"fdofbujfshszxgmmurqb.supabase.co",
+			"avatars.githubusercontent.com",
+			"tailwindui.com",
+		],
 	},
 	experimental: {
 		typedRoutes: true,

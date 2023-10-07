@@ -33,7 +33,7 @@ export default async function Products({
 
 		const paramsObject = {};
 		for (const [key, value] of params.entries()) {
-			// @ts-expect-error TODO
+			// @ts-expect-error TODO fixme
 			paramsObject[key] = value;
 		}
 

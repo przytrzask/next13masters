@@ -1,20 +1,52 @@
-type FormnValues = {
-	name: string;
-	email: string;
-	title: string;
-	description: string;
-	rating: string;
-};
+import zod from "zod";
+import { revalidateTag } from "next/cache";
+import { addReview } from "@/api/reviews";
 
-export const ProductReviewsForm = () => {
+const schema = zod.object({
+	name: zod.string(),
+	email: zod.string(),
+	title: zod.string(),
+	description: zod.string(),
+	rating: zod.string(),
+});
+
+export const ProductReviewsForm = ({ productId }: { productId: string }) => {
 	const handleSubmitRatingAction = async (data: FormData) => {
 		"use server";
 
-		console.log(data);
+		const parsed = schema.safeParse({
+			title: data.get("headline"),
+			description: data.get("content"),
+			rating: data.get("rating"),
+			name: data.get("name"),
+			email: data.get("email"),
+		});
+
+		if (parsed.success) {
+			await addReview({
+				input: {
+					product: {
+						id: productId,
+					},
+					user: {
+						userName: parsed.data.name,
+						email: parsed.data.email,
+					},
+
+					description: parsed.data.description,
+					title: parsed.data.title,
+					rating: Number(parsed.data.rating),
+				},
+			});
+
+			revalidateTag("reviews");
+		} else {
+			// TODO KURWA
+		}
 	};
 
 	return (
-		<div className="lg:col-span-4">
+		<div className="lg:col-span-4" data-testid="add-review-form">
 			<h2 className="text-2xl font-bold tracking-tight text-gray-900">Add review</h2>
 
 			<form className="mt-10" action={handleSubmitRatingAction}>
@@ -49,26 +81,26 @@ export const ProductReviewsForm = () => {
 				</div>
 
 				<div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-indigo-600">
-					<label htmlFor="title" className="block text-xs font-medium text-gray-900">
+					<label htmlFor="headline" className="block text-xs font-medium text-gray-900">
 						Title
 					</label>
 					<input
 						type="text"
-						name="title"
-						id="title"
+						name="headline"
+						id="headline"
 						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 						placeholder="Jane Smith"
 						required
 					/>
 				</div>
 				<div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-indigo-600">
-					<label htmlFor="description" className="block text-xs font-medium text-gray-900">
+					<label htmlFor="content" className="block text-xs font-medium text-gray-900">
 						Description
 					</label>
 					<input
 						type="text"
-						name="description"
-						id="description"
+						name="content"
+						id="content"
 						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 						placeholder="Nice one"
 						required

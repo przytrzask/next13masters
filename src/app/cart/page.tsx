@@ -111,7 +111,7 @@ export default async function Cart() {
 							</div>
 						</dl>
 
-						<form
+						{/* <form
 							action={async () => {
 								"use server";
 								await handleStripePaymentAction();
@@ -125,7 +125,7 @@ export default async function Cart() {
 							>
 								Checkout
 							</button>
-						</form>
+						</form> */}
 					</section>
 				</div>
 			</div>

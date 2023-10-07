@@ -23,10 +23,12 @@ export const getProductsList = async ({
 	take,
 	skip,
 	search = undefined,
+	orderBy = undefined,
 }: {
 	take: number;
 	skip: number;
 	search?: string;
+	orderBy?: { field: "rating" | "price"; direction: "ASC" | "DESC" };
 }) => {
 	const graphqlResponse = await executeGraphQl({
 		query: ProductsGetListDocument,
@@ -34,6 +36,7 @@ export const getProductsList = async ({
 			take,
 			skip,
 			...(search && { search }),
+			...(orderBy && { orderBy }),
 		},
 	});
 

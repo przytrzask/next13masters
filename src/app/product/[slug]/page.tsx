@@ -36,13 +36,13 @@ type ProductProps = {
 // 	}));
 // }
 
-// export const generateMetadata = async ({ params: { slug } }: Params): Promise<Metadata> => {
-// 	const product = await getProductBySlug(slug);
-// 	return {
-// 		title: product?.name,
-// 		description: product?.description,
-// 	};
-// };
+export const generateMetadata = async ({ params: { slug } }: Params): Promise<Metadata> => {
+	const product = await getProductBySlug(slug);
+	return {
+		title: product?.name,
+		description: product?.description,
+	};
+};
 
 export default async function Product({ params: { slug } }: ProductProps) {
 	const product = await getProductBySlug(slug);
@@ -57,7 +57,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
 
 		const cart = await getOrCreateCart();
 
-		await addProductToCart(cart.id, product?.id, {
+		await addProductToCart(cart.id, product.id, {
 			color,
 			size,
 		});
@@ -84,7 +84,6 @@ export default async function Product({ params: { slug } }: ProductProps) {
 						</Suspense>
 						<AddToCartButton />
 					</form>
-					{/* Product details */}
 					<div className="mt-10">
 						<h2 className="text-bold text-lg font-medium text-gray-900">Opis</h2>
 						<div
@@ -100,8 +99,8 @@ export default async function Product({ params: { slug } }: ProductProps) {
 				<SuggestedProductList />
 			</Suspense>
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">
-				<ProductReviewsForm />
-				<ProductReviewsList id={product.id} />
+				<ProductReviewsForm productId={product.id} />
+				<ProductReviewsList productId={product.id} />
 			</div>
 		</div>
 	);

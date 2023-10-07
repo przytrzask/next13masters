@@ -18,12 +18,20 @@ export const SearchInput = () => {
 	const debounced = useMemo(
 		() =>
 			debounce((val: string) => {
-				const url = `${pathname}?${new URLSearchParams({ query: val }).toString()}`;
+				const newParams = new URLSearchParams(searchParams.toString());
+
+				if (val) {
+					newParams.set("query", encodeURIComponent(decodeURIComponent(val)));
+				} else {
+					newParams.delete("query");
+				}
+
+				const url = `search/${pathname}?${newParams.toString()}`;
 
 				// @ts-expect-error TODO: fix this
-				router.push(url, { shallow: true });
+				router.push(url);
 			}, 500),
-		[pathname, router],
+		[pathname, router, searchParams],
 	);
 
 	const handleChange = useCallback(

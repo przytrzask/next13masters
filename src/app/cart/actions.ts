@@ -3,10 +3,10 @@
 import Stripe from "stripe";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { executeGraphQl } from "@/api/executeGraphQl";
 import { deleteCartItem, getCartFromCookies } from "@/api/orders";
 import { CartChangeItemQuantityDocument } from "@/gql/graphql";
-import { cookies } from "next/headers";
 
 export const changeItemQuantity = async (itemId: string, quantity: number) => {
 	return executeGraphQl({ query: CartChangeItemQuantityDocument, variables: { itemId, quantity } });
@@ -53,9 +53,6 @@ export async function handleStripePaymentAction() {
 		})),
 	});
 
-	console.log({
-		checkouSession,
-	});
 	if (checkouSession.url) {
 		cookies().set("cartId", "");
 		redirect(checkouSession.url);

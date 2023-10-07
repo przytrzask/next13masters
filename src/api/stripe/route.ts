@@ -29,7 +29,5 @@ export async function POST(req: NextRequest): Promise<Response> {
 		webhookSecret,
 	) as Stripe.DiscriminatedEvent;
 
-	console.log(event);
-
 	return new Response(null, { status: 204 });
 }

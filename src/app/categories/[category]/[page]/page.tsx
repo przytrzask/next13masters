@@ -3,6 +3,11 @@ import { getProductsByCategorySlug } from "@/api/products";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { Pagination } from "@/ui/molecules/Pagination";
 
+const mapToTitle = {
+	shoes: "Shoes",
+	t_shirts: "T shirts",
+};
+
 type Params = {
 	params: {
 		category: "shoes" | "t_shirts";
@@ -12,7 +17,7 @@ type Params = {
 
 export const generateMetadata = async ({ params }: Params) => {
 	return {
-		title: params.category,
+		title: mapToTitle[params.category],
 	};
 };
 
@@ -35,7 +40,7 @@ export default async function CategoryPage({
 		<section className="bg-white" aria-labelledby="category_heading">
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 				<h2 id="category_heading" className="text-2xl font-bold tracking-tight text-gray-900">
-					{category}
+					{mapToTitle[category]}
 				</h2>
 				<ProductList products={products.data} />
 				<div className="mt-2">

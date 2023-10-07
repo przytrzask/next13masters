@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { ActiveLink } from "../atoms/ActiveLink";
 
 type PaginationProps = {
@@ -9,6 +10,8 @@ type PaginationProps = {
 };
 
 export const Pagination = ({ alias, count = 0, perpage }: PaginationProps) => {
+	const searchParams = useSearchParams();
+
 	return count ? (
 		<nav
 			className="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0"
@@ -21,8 +24,7 @@ export const Pagination = ({ alias, count = 0, perpage }: PaginationProps) => {
 							key={number.toString()}
 							activeClassName="inline-flex items-center border-t-2 border-indigo-500 px-4 pt-4 text-sm font-medium text-indigo-600"
 							className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-							href={`/${alias}/${number}`}
-							exact
+							href={`/${alias}/${number}?${searchParams.toString()}`}
 						>
 							{number.toString()}
 						</ActiveLink>
