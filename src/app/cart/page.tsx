@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { IncrementDecrementItem } from "./IncrementDecrementItem";
 import { RemoveButton } from "./DeleteButton";
-import { handleStripePaymentAction } from "./actions";
 import { getCartFromCookies } from "@/api/orders";
 
 export default async function Cart() {

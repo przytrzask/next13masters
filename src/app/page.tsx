@@ -2,13 +2,13 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Collections } from "@/ui/organisms/Collections";
-import { Decor, Customizer } from "@/ui/organisms/HeroDecor";
+import { Decor } from "@/ui/organisms/HeroDecor";
 import { SearchInput } from "@/ui/atoms/SearchInput";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { getProductsList } from "@/api/products";
 
 export default async function Home() {
-	const { data, count } = await getProductsList({
+	const { data } = await getProductsList({
 		take: 4,
 		skip: 0,
 	});

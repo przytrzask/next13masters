@@ -73,6 +73,7 @@ export const NavigationList = async () => {
 						width={24}
 						height={24}
 						className="inline-block h-6 w-6 rounded-full"
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 						src={userSession.data?.session?.user.user_metadata.avatar_url}
 						alt=""
 					/>

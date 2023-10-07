@@ -23,7 +23,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 		return new Response("No signature", { status: 400 });
 	}
 
-	const event = stripe.webhooks.constructEvent(
+	stripe.webhooks.constructEvent(
 		await req.text(),
 		signature,
 		webhookSecret,

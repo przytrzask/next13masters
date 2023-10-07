@@ -176,6 +176,7 @@ useGLTF.preload("/shirt_baked.glb");
 
 export function Customizer() {
 	const handleColorChange = (color: string) => {
+		// @ts-expect-error TODO fixme
 		store.color = color;
 	};
 
