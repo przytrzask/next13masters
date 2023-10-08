@@ -22,5 +22,9 @@ export function createOrderByParams(existingSearchParams: string) {
 		}
 	}
 
+	if (paramsObject.field === undefined && paramsObject.direction === undefined) {
+		return undefined;
+	}
+
 	return paramsObject as { field: "rating" | "price"; direction: "ASC" | "DESC" };
 }
