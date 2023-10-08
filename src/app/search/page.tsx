@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { getProductsList } from "@/api/products";
-import { SearchInput } from "@/ui/atoms/SearchInput";
 import { Pagination } from "@/ui/molecules/Pagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { SortSelect } from "@/ui/molecules/SortSelect";
+import { createOrderByParams } from "@/ui/utils";
 
 export default async function Products({
 	params,
@@ -26,25 +26,13 @@ export default async function Products({
 
 	const orderBySearchParams = searchParams?.["orderBy"] as string;
 
-	const orderByParams = () => {
-		if (!orderBySearchParams) return undefined;
-
-		const params = new URLSearchParams(orderBySearchParams);
-
-		const paramsObject = {};
-		for (const [key, value] of params.entries()) {
-			// @ts-expect-error TODO fixme
-			paramsObject[key] = value;
-		}
-
-		return paramsObject as { field: "rating" | "price"; direction: "ASC" | "DESC" };
-	};
+	const orderByParams = createOrderByParams(orderBySearchParams);
 
 	const { data, count } = await getProductsList({
 		take: perpage,
 		skip,
 		search: search ?? undefined,
-		orderBy: orderByParams(),
+		orderBy: orderByParams,
 	});
 
 	return (
@@ -55,7 +43,6 @@ export default async function Products({
 					<Suspense>
 						<div className="flex flex-row">
 							<SortSelect />
-							<SearchInput />
 						</div>
 					</Suspense>
 					<ProductList products={data} />

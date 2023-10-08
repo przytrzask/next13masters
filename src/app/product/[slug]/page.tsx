@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { revalidateTag } from "next/cache";
-import { getProductBySlug } from "@/api/products";
+import { getProductBySlug, getProductsList } from "@/api/products";
 import { SuggestedProductList } from "@/ui/organisms/SuggestedProductList";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { ColorPicker } from "@/ui/organisms/ColorPicker";
@@ -25,16 +25,16 @@ type ProductProps = {
 	};
 };
 
-// export async function generateStaticParams() {
-// 	const products = await getProductsList({
-// 		take: 10,
-// 		skip: 1,
-// 	});
+export async function generateStaticParams() {
+	const products = await getProductsList({
+		take: 10,
+		skip: 0,
+	});
 
-// 	return products.data.map((product) => ({
-// 		productId: product.id,
-// 	}));
-// }
+	return products.data.map((product) => ({
+		slug: product.slug,
+	}));
+}
 
 export const generateMetadata = async ({ params: { slug } }: Params): Promise<Metadata> => {
 	const product = await getProductBySlug(slug);

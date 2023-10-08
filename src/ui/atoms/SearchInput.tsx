@@ -2,7 +2,7 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
 export const SearchInput = () => {
@@ -12,8 +12,6 @@ export const SearchInput = () => {
 	const [value, setValue] = useState(() => query ?? "");
 
 	const router = useRouter();
-
-	const pathname = usePathname();
 
 	const debounced = useMemo(
 		() =>
@@ -26,12 +24,12 @@ export const SearchInput = () => {
 					newParams.delete("query");
 				}
 
-				const url = `search/${pathname}?${newParams.toString()}`;
+				const url = `/search?${newParams.toString()}`;
 
 				// @ts-expect-error TODO: fix this
 				router.push(url);
 			}, 500),
-		[pathname, router, searchParams],
+		[router, searchParams],
 	);
 
 	const handleChange = useCallback(

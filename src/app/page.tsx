@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { Collections } from "@/ui/organisms/Collections";
 import { Decor } from "@/ui/organisms/HeroDecor";
-import { SearchInput } from "@/ui/atoms/SearchInput";
+
 import { ProductList } from "@/ui/organisms/ProductList";
 import { getProductsList } from "@/api/products";
 
@@ -16,7 +16,6 @@ export default async function Home() {
 	return (
 		<section className="bg-white">
 			<div className="mx-auto mt-2 max-w-7xl px-4 sm:px-6 lg:px-8">
-				<SearchInput />
 				<div className="flex h-16 items-center">
 					<button
 						type="button"

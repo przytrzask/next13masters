@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import { ActiveLink } from "../atoms/ActiveLink";
 import { Login } from "../organisms/Login";
+import { SearchInput } from "../atoms/SearchInput";
 import { CartLink } from "./CartLink";
 import { type Database } from "@/types/supabase";
 
@@ -67,6 +68,7 @@ export const NavigationList = async () => {
 				</div>
 			</nav>
 			<div className="ml-auto flex gap-4">
+				<SearchInput />
 				{userSession.data.session ? (
 					<Image
 						width={24}
