@@ -1,0 +1,10 @@
+query collections {
+	collections {
+		id
+		name
+		description
+		products {
+			...ProductListItem
+		}
+	}
+}

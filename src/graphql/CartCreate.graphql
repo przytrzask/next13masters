@@ -1,0 +1,5 @@
+mutation CartCreate($total: Int!) {
+	createOrder(total: $total) {
+		id
+	}
+}

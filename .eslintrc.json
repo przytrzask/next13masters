@@ -40,6 +40,15 @@
 				"disallowTypeAnnotations": false
 			}
 		],
+		// Server Actions `action={…}`
+		"@typescript-eslint/no-misused-promises": [
+			"error",
+			{
+				"checksVoidReturn": {
+					"attributes": false
+				}
+			}
+		],
 
 		"import/no-duplicates": ["error", { "prefer-inline": true }],
 

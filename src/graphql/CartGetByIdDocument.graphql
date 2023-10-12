@@ -1,0 +1,19 @@
+query CartGetById($id: ID!) {
+	order(id: $id, status: DRAFT) {
+		id
+		orderItems {
+			quantity
+			id
+			color {
+				color
+			}
+			size {
+				size
+			}
+			name
+			price
+			description
+			image
+		}
+	}
+}

@@ -1,0 +1,19 @@
+mutation AddOrderItem(
+	$quantity: Int!
+	$orderId: ID!
+	$productId: ID!
+	$color: ColorType!
+	$size: SizeType!
+) {
+	createOrderItem(
+		data: {
+			quantity: $quantity
+			order: { connect: { id: $orderId } }
+			product: { connect: { id: $productId } }
+			color: { connect: $color }
+			size: { connect: $size }
+		}
+	) {
+		id
+	}
+}
