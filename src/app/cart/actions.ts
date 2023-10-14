@@ -9,7 +9,11 @@ import { deleteCartItem, getCartFromCookies } from "@/api/orders";
 import { CartChangeItemQuantityDocument } from "@/gql/graphql";
 
 export const changeItemQuantity = async (itemId: string, quantity: number) => {
-	return executeGraphQl({ query: CartChangeItemQuantityDocument, variables: { itemId, quantity } });
+	return executeGraphQl({
+		query: CartChangeItemQuantityDocument,
+		variables: { itemId, quantity },
+		cache: "no-store",
+	});
 };
 
 export const removeItem = async (itemId: string) => {
