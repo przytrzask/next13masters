@@ -65,7 +65,7 @@ export async function getCartFromCookies() {
 			variables: {
 				id: cartId,
 			},
-			// cache: "no-store",
+			cache: "no-store",
 		});
 		if (cart) {
 			return cart;

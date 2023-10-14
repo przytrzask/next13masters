@@ -1,6 +1,7 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import { Suspense } from "react";
 import { IncrementDecrementItem } from "./IncrementDecrementItem";
 import { RemoveButton } from "./DeleteButton";
 import { getCartFromCookies } from "@/api/orders";
@@ -27,44 +28,49 @@ export default async function Cart() {
 						<ul role="list" className="divide-y divide-gray-200 border-b border-t border-gray-200">
 							{cart.orderItems.map((orderItem) => (
 								<li key={orderItem.id} className="flex py-6 sm:py-10">
-									<div className="relative h-24 w-24 flex-shrink-0 rounded-md object-cover object-center sm:h-48 sm:w-48">
-										<Image
-											src={orderItem.image}
-											alt=""
-											fill
-											className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
-										/>
-									</div>
+									<Suspense fallback={<div>Loading...</div>}>
+										<div className="relative h-24 w-24 flex-shrink-0 rounded-md object-cover object-center sm:h-48 sm:w-48">
+											<Image
+												src={orderItem.image}
+												alt=""
+												fill
+												className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
+											/>
+										</div>
 
-									<div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-										<div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-											<div>
-												<div className="flex justify-between">
-													<h3 className="text-sm">{orderItem.name}</h3>
+										<div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+											<div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+												<div>
+													<div className="flex justify-between">
+														<h3 className="text-sm">{orderItem.name}</h3>
+													</div>
+													<div className="mt-1 flex text-sm">
+														<p className="text-gray-500">{orderItem.color.color}</p>
+														{orderItem.size ? (
+															<p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">
+																{orderItem.size.size}
+															</p>
+														) : null}
+													</div>
+													<p className="mt-1 text-sm font-medium text-gray-900">
+														{orderItem.price}
+													</p>
 												</div>
-												<div className="mt-1 flex text-sm">
-													<p className="text-gray-500">{orderItem.color.color}</p>
-													{orderItem.size ? (
-														<p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">
-															{orderItem.size.size}
-														</p>
-													) : null}
-												</div>
-												<p className="mt-1 text-sm font-medium text-gray-900">{orderItem.price}</p>
-											</div>
 
-											<div className="mt-4 sm:mt-0 sm:pr-9">
-												<label htmlFor={`quantity-${orderItem.id}`} className="sr-only">
-													Quantity, {orderItem.name}
-												</label>
-												<IncrementDecrementItem
-													itemId={orderItem.id}
-													quantity={orderItem.quantity}
-												/>
-												<RemoveButton itemId={orderItem.id} />
+												<div className="mt-4 sm:mt-0 sm:pr-9">
+													<label htmlFor={`quantity-${orderItem.id}`} className="sr-only">
+														Quantity, {orderItem.name}
+													</label>
+													<IncrementDecrementItem
+														itemId={orderItem.id}
+														quantity={orderItem.quantity}
+													/>
+
+													<RemoveButton itemId={orderItem.id} />
+												</div>
 											</div>
 										</div>
-									</div>
+									</Suspense>
 								</li>
 							))}
 						</ul>

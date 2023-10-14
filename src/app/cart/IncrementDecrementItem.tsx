@@ -1,6 +1,7 @@
 "use client";
 
-import { experimental_useOptimistic as useOptimistic, useTransition } from "react";
+import { experimental_useOptimistic as useOptimistic } from "react";
+import clsx from "clsx";
 import { changeItemQuantity } from "./actions";
 
 type IncrementDecrementItemProps = {
@@ -13,7 +14,6 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 		quantity,
 		(_state, newQuantity: number) => newQuantity,
 	);
-	const [isPending] = useTransition();
 
 	const handleDecrement = async () => {
 		if (optimisticQuantity === 1) {
@@ -32,9 +32,10 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 		<>
 			<button
 				data-testid="decrement"
-				className="h-8 w-6 rounded-md border border-gray-200  text-center text-base font-medium hover:bg-indigo-50"
+				className={clsx(
+					"h-8 w-6 rounded-md border border-gray-200  text-center text-base font-medium hover:bg-indigo-50",
+				)}
 				onClick={handleDecrement}
-				disabled={isPending}
 			>
 				-
 			</button>
@@ -47,7 +48,6 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 			</output>
 			<button
 				data-testid="increment"
-				disabled={isPending}
 				onClick={handleIncrement}
 				className="h-8 w-6 rounded-md border border-gray-200  text-center text-base font-medium hover:bg-indigo-50"
 			>
