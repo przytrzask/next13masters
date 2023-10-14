@@ -1,8 +1,7 @@
-import { Bars3Icon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Collections } from "@/ui/organisms/Collections";
-import { Decor } from "@/ui/organisms/HeroDecor";
+import { Customizer, Decor } from "@/ui/organisms/HeroDecor";
 
 import { ProductList } from "@/ui/organisms/ProductList";
 import { getProductsList } from "@/api/products";
@@ -15,25 +14,11 @@ export default async function Home() {
 
 	return (
 		<section className="bg-white">
-			<div className="mx-auto mt-2 max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div className="flex h-16 items-center">
-					<button
-						type="button"
-						className="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
-						// onClick={() => setOpen(true)}
-					>
-						<span className="absolute -inset-0.5" />
-						<span className="sr-only">Open menu</span>
-						<Bars3Icon className="h-6 w-6" aria-hidden="true" />
-					</button>
-				</div>
-			</div>
-
-			<div className="relative pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
-				<div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
+			<div className="relative mx-auto max-w-7xl px-4">
+				<div className="max-w-7xl pb-80 pt-16 sm:static sm:px-6 sm:pb-40 sm:pt-24 lg:px-8 lg:pb-48 lg:pt-40">
 					<Suspense>
 						<Decor />
-						{/* <Customizer /> */}
+						<Customizer />
 					</Suspense>
 					<div className="sm:max-w-lg">
 						<h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -49,7 +34,7 @@ export default async function Home() {
 						<div className="mt-10">
 							<Link
 								href="/products"
-								className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+								className="absolute inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
 							>
 								Shop Collection
 							</Link>

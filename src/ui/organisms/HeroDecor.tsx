@@ -20,7 +20,15 @@ import type * as THREE from "three";
 import { RadioGroup } from "@headlessui/react";
 import clsx from "clsx";
 
-const colors = ["#ccc", "#EFBD4E", "#80C670", "#726DE8", "#EF674E", "#353934", "Purple"] as const;
+const colors = [
+	"#CCCCCC",
+	"#EFBD4E",
+	"#80C670",
+	"#726DE8",
+	"#EF674E",
+	"#353934",
+	"#800080",
+] as const;
 
 type Store = {
 	variant: "intro" | "customizer";
@@ -51,7 +59,7 @@ export function Decor() {
 				eventSource={eventSource}
 				camera={{
 					position: [0, 0, 2.5],
-					fov: 25,
+					fov: 24,
 				}}
 				preserveDrawing={{
 					preserveDrawingBuffer: true,
@@ -103,7 +111,7 @@ const Shirt = () => {
 				material-roughness={1}
 			>
 				<Decal
-					position={[-0.4, 0.1, -0.35]}
+					position={[-0.42, 0.1, -0.35]}
 					scale={[0.2, 0.12, 0.15]}
 					rotation={[-1.5, 0, 0]}
 					map={texture}
@@ -182,7 +190,7 @@ export function Customizer() {
 
 	return (
 		<RadioGroup as={Fragment} name="color" value={store.color} onChange={handleColorChange}>
-			<div className="absolute bottom-2  right-32 flex max-w-fit gap-4">
+			<div className="absolute bottom-2 right-8 top-40 flex max-w-fit flex-col gap-4">
 				{colors.map((color) => (
 					<RadioGroup.Option
 						key={color}
