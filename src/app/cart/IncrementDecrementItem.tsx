@@ -20,12 +20,12 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 			return;
 		}
 		setQuantity(optimisticQuantity - 1);
-		await changeItemQuantity(itemId, optimisticQuantity - 1);
+		void changeItemQuantity(itemId, optimisticQuantity - 1);
 	};
 
 	const handleIncrement = async () => {
 		setQuantity(optimisticQuantity + 1);
-		await changeItemQuantity(itemId, optimisticQuantity + 1);
+		void changeItemQuantity(itemId, optimisticQuantity + 1);
 	};
 
 	return (
