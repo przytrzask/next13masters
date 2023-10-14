@@ -1,7 +1,6 @@
 "use client";
 
-import { experimental_useOptimistic as useOptimistic } from "react";
-import clsx from "clsx";
+import React, { useState } from "react";
 import { changeItemQuantity } from "./actions";
 
 type IncrementDecrementItemProps = {
@@ -10,32 +9,54 @@ type IncrementDecrementItemProps = {
 };
 
 export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementItemProps) => {
-	const [optimisticQuantity, setQuantity] = useOptimistic(
-		quantity,
-		(_state, newQuantity: number) => newQuantity,
-	);
+	const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
+	const [isPending, setIsPending] = useState(false);
 
 	const handleDecrement = async () => {
 		if (optimisticQuantity === 1) {
 			return;
 		}
-		setQuantity(optimisticQuantity - 1);
-		void changeItemQuantity(itemId, optimisticQuantity - 1);
+
+		// Optimistic update
+		const newQuantity = optimisticQuantity - 1;
+		setOptimisticQuantity(newQuantity);
+
+		// Perform async action and handle errors
+		try {
+			setIsPending(true);
+			await changeItemQuantity(itemId, newQuantity);
+		} catch (error) {
+			// Handle error and possibly revert the optimistic update
+			setOptimisticQuantity(optimisticQuantity + 1);
+		} finally {
+			setIsPending(false);
+		}
 	};
 
 	const handleIncrement = async () => {
-		setQuantity(optimisticQuantity + 1);
-		void changeItemQuantity(itemId, optimisticQuantity + 1);
+		// Optimistic update
+		const newQuantity = optimisticQuantity + 1;
+		setOptimisticQuantity(newQuantity);
+
+		// Perform async action and handle errors
+		try {
+			setIsPending(true);
+			await changeItemQuantity(itemId, newQuantity);
+		} catch (error) {
+			// Handle error and possibly revert the optimistic update
+			setOptimisticQuantity(optimisticQuantity - 1);
+		} finally {
+			setIsPending(false);
+		}
 	};
 
 	return (
 		<>
 			<button
 				data-testid="decrement"
-				className={clsx(
-					"h-8 w-6 rounded-md border border-gray-200  text-center text-base font-medium hover:bg-indigo-50",
-				)}
+				className="h-8 w-6 rounded-md border border-gray-200  text-center text-base font-medium hover:bg-indigo-50"
 				onClick={handleDecrement}
+				disabled={isPending || optimisticQuantity === 1}
 			>
 				-
 			</button>
@@ -48,6 +69,7 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 			</output>
 			<button
 				data-testid="increment"
+				disabled={isPending}
 				onClick={handleIncrement}
 				className="h-8 w-6 rounded-md border border-gray-200  text-center text-base font-medium hover:bg-indigo-50"
 			>
