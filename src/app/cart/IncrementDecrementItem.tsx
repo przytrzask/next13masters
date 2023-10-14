@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { changeItemQuantity } from "./actions";
 
 type IncrementDecrementItemProps = {
@@ -9,6 +9,8 @@ type IncrementDecrementItemProps = {
 };
 
 export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementItemProps) => {
+	const [isLoaded, setIsLoaded] = useState(false);
+
 	const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
 	const [isPending, setIsPending] = useState(false);
 
@@ -50,7 +52,11 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 		}
 	};
 
-	return (
+	useEffect(() => {
+		setIsLoaded(true);
+	}, []);
+
+	return !isLoaded ? null : (
 		<>
 			<button
 				data-testid="decrement"
