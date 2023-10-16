@@ -12,6 +12,7 @@ type ProductLisItemProps = {
 export const ProductListItem = ({ product }: ProductLisItemProps) => {
 	return (
 		<li className="group relative">
+			{/* @ts-expect-error todo  */}
 			<AnimatedLink href={`/product/${product.slug}`}>
 				{product.images?.[0] && (
 					<ProductCoverImage

@@ -13,7 +13,9 @@ export const ProductCoverImage = ({ alt, src }: { alt: string; src: string; href
 		>
 			<Image
 				onClick={(event) => {
-					event.target.style.viewTransitionName = "cover-image";
+					if (event.currentTarget?.style && "viewTransitionName" in event.currentTarget.style) {
+						event.currentTarget.style.viewTransitionName = "cover-image";
+					}
 				}}
 				src={src}
 				alt={alt}
