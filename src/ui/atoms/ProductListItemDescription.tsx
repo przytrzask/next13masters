@@ -1,11 +1,18 @@
 import { StarIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import { formatMoney } from "../utils";
-import { type ProductListItemFragment } from "@/gql/graphql";
+import { type CategoryName, type ProductListItemFragment } from "@/gql/graphql";
 
 type ProductListItemDescriptionProps = {
 	product: ProductListItemFragment;
 };
+
+const mapCategoryName = {
+	ACCESSORIES: "Accessories",
+	HOODIES: "Hoodies",
+	SHOES: "Shoes",
+	T_SHIRTS: "T-Shirts",
+} as Record<CategoryName, string>;
 
 export const ProductListItemDescription = ({
 	product: { name, categories, price, rating },
@@ -35,7 +42,9 @@ export const ProductListItemDescription = ({
 			<div className="mt-4 flex justify-between">
 				<div>
 					<h3 className="text-sm text-gray-700">{name}</h3>
-					<p className="mt-1 text-sm text-gray-500">{categories[0]?.name}</p>
+					{categories[0] && (
+						<p className="mt-1 text-sm text-gray-500"> {mapCategoryName?.[categories[0]?.name]}</p>
+					)}
 				</div>
 				<p data-testid="product-price" className="text-sm font-medium text-gray-900">
 					{formatMoney(price / 100)}

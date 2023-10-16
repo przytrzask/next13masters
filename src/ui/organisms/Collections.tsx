@@ -6,7 +6,7 @@ const collections = [
 	{
 		name: "Desk and Office",
 		description: "Work from home accessories",
-		imageSrc: "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg",
+		imageSrc: "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-01.jpg",
 		imageAlt:
 			"Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.",
 		href: "collections/desk-and-office",
@@ -14,7 +14,7 @@ const collections = [
 	{
 		name: "Self-Improvement",
 		description: "Journals and note-taking",
-		imageSrc: "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg",
+		imageSrc: "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-02.jpg",
 		imageAlt:
 			"Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.",
 		href: "collections",

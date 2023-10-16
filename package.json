@@ -10,6 +10,8 @@
 		"codegen": "graphql-codegen --config .graphqlrc.ts"
 	},
 	"dependencies": {
+		"@graphql-codegen/cli": "5.0.0",
+		"@graphql-codegen/client-preset": "^4.1.0",
 		"@graphql-typed-document-node/core": "^3.2.0",
 		"@headlessui/react": "^1.7.17",
 		"@heroicons/react": "^2.0.18",
@@ -17,10 +19,13 @@
 		"@mdx-js/react": "^2.3.0",
 		"@next/env": "^13.5.3",
 		"@next/mdx": "^13.5.3",
+		"@parcel/watcher": "^2.3.0",
 		"@react-three/drei": "^9.86.3",
 		"@react-three/fiber": "^8.14.4",
 		"@supabase/auth-helpers-nextjs": "^0.8.1",
 		"@supabase/supabase-js": "^2.37.0",
+		"@tailwindcss/aspect-ratio": "^0.4.2",
+		"@tailwindcss/typography": "^0.5.10",
 		"@types/mdx": "^2.0.8",
 		"@types/node": "20.5.9",
 		"@types/react": "18.2.21",
@@ -43,12 +48,7 @@
 		"three-stdlib": "^2.27.0",
 		"typescript": "5.2.2",
 		"valtio": "^1.11.2",
-		"zod": "^3.22.2",
-		"@graphql-codegen/cli": "5.0.0",
-		"@graphql-codegen/client-preset": "^4.1.0",
-		"@parcel/watcher": "^2.3.0",
-		"@tailwindcss/aspect-ratio": "^0.4.2",
-		"@tailwindcss/typography": "^0.5.10"
+		"zod": "^3.22.2"
 	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^6.7.3",

@@ -32,8 +32,8 @@ export default async function CollectionPage({ params: { id } }: Props) {
 	if (!collection) throw notFound();
 
 	return (
-		<div>
-			<h2>{collection.name}</h2>
+		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<h2 className="mt-2 text-2xl  text-gray-900">{collection.name}</h2>
 
 			<ProductList products={collection.products} />
 		</div>

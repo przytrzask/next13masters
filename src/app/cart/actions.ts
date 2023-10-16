@@ -4,6 +4,7 @@ import Stripe from "stripe";
 
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 import { executeGraphQl } from "@/api/executeGraphQl";
 import { deleteCartItem, getCartFromCookies } from "@/api/orders";
 import { CartChangeItemQuantityDocument } from "@/gql/graphql";
@@ -13,6 +14,8 @@ export const changeItemQuantity = async (itemId: string, quantity: number) => {
 		query: CartChangeItemQuantityDocument,
 		variables: { itemId, quantity },
 		cache: "no-store",
+	}).then(() => {
+		revalidateTag("cart");
 	});
 };
 

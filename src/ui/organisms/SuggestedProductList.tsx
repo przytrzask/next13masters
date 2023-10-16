@@ -8,7 +8,9 @@ export async function SuggestedProductList() {
 
 	return (
 		<section data-testid="related-products" aria-labelledby="related-products">
-			<h2 id="related-products">Suggested products</h2>
+			<h2 id="related-products" className="mt-2 text-2xl  text-gray-900">
+				Suggested products
+			</h2>
 			<ProductList products={products.data} />;
 		</section>
 	);

@@ -61,9 +61,6 @@ export function Decor() {
 					position: [0, 0, 2.5],
 					fov: 24,
 				}}
-				preserveDrawing={{
-					preserveDrawingBuffer: true,
-				}}
 				eventPrefix="client"
 			>
 				<ambientLight intensity={0.5} />
@@ -95,6 +92,8 @@ const Shirt = () => {
 	const texture = useTexture(`/logo3d.png`);
 
 	const { materials, nodes } = useGLTF("/shirt_baked.glb") as GLTFResult;
+
+	console.log(snap.color);
 
 	useFrame((_state, delta) => {
 		easing.dampC(materials?.lambert1?.color, snap.color, 0.25, delta);
@@ -160,14 +159,8 @@ type CameraProps = {
 
 function CameraRig({ children }: CameraProps) {
 	const group = useRef<THREE.Group>(null);
-	const snap = useSnapshot(store);
 	useFrame((state, delta) => {
-		easing.damp3(
-			state.camera.position,
-			[snap.variant === "intro" ? -state.viewport.width / 4 : 0, 0, 2],
-			0.25,
-			delta,
-		);
+		easing.damp3(state.camera.position, [-state.viewport.width / 5, 0, 2], 0.25, delta);
 
 		if (!group.current) return;
 		easing.dampE(
@@ -183,13 +176,16 @@ function CameraRig({ children }: CameraProps) {
 useGLTF.preload("/shirt_baked.glb");
 
 export function Customizer() {
+	const snap = useSnapshot(store);
+
 	const handleColorChange = (color: string) => {
+		console.log(color);
 		// @ts-expect-error TODO fixme
 		store.color = color;
 	};
 
 	return (
-		<RadioGroup as={Fragment} name="color" value={store.color} onChange={handleColorChange}>
+		<RadioGroup as={Fragment} name="color" value={snap.color} onChange={handleColorChange}>
 			<div className="absolute bottom-2 right-8 top-40 flex max-w-fit flex-col gap-4">
 				{colors.map((color) => (
 					<RadioGroup.Option
@@ -197,7 +193,7 @@ export function Customizer() {
 						value={color}
 						className={clsx(
 							// active && checked ? "ring ring-offset-1" : "",
-							// !active && checked ? "ring-2" : "",
+							color === snap.color ? "ring-2" : "",
 							"relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none",
 						)}
 					>

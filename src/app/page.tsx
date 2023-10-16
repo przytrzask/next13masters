@@ -17,8 +17,10 @@ export default async function Home() {
 			<div className="relative mx-auto max-w-7xl px-4">
 				<div className="max-w-7xl pb-80 pt-16 sm:static sm:px-6 sm:pb-40 sm:pt-24 lg:px-8 lg:pb-48 lg:pt-40">
 					<Suspense>
-						<Decor />
-						<Customizer />
+						<div className="hidden md:block">
+							<Decor />
+							<Customizer />
+						</div>
 					</Suspense>
 					<div className="sm:max-w-lg">
 						<h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">

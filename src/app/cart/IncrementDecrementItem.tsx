@@ -19,16 +19,13 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 			return;
 		}
 
-		// Optimistic update
 		const newQuantity = optimisticQuantity - 1;
 		setOptimisticQuantity(newQuantity);
 
-		// Perform async action and handle errors
 		try {
 			setIsPending(true);
 			await changeItemQuantity(itemId, newQuantity);
 		} catch (error) {
-			// Handle error and possibly revert the optimistic update
 			setOptimisticQuantity(optimisticQuantity + 1);
 		} finally {
 			setIsPending(false);
@@ -36,16 +33,13 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 	};
 
 	const handleIncrement = async () => {
-		// Optimistic update
 		const newQuantity = optimisticQuantity + 1;
 		setOptimisticQuantity(newQuantity);
 
-		// Perform async action and handle errors
 		try {
 			setIsPending(true);
 			await changeItemQuantity(itemId, newQuantity);
 		} catch (error) {
-			// Handle error and possibly revert the optimistic update
 			setOptimisticQuantity(optimisticQuantity - 1);
 		} finally {
 			setIsPending(false);
@@ -69,7 +63,7 @@ export const IncrementDecrementItem = ({ quantity, itemId }: IncrementDecrementI
 
 			<output
 				data-testid="quantity"
-				className="mx-2 h-8 w-6   text-left text-base font-medium text-gray-700 shadow-sm"
+				className="mx-2 h-8 w-6 text-left text-base font-medium text-gray-700 shadow-sm"
 			>
 				{optimisticQuantity}
 			</output>
