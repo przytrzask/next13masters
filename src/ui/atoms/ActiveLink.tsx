@@ -22,7 +22,12 @@ export function ActiveLink<T extends string>({
 }: LinkItemProps<T>) {
 	const pathname = usePathname();
 
-	const isActive = exact ? pathname === href : pathname.startsWith(href);
+	const strippedPathname = pathname.split("?")[0] as string;
+	const strippedHref = href.split("?")[0] as string;
+
+	const isActive = exact
+		? strippedPathname === strippedHref
+		: strippedPathname.startsWith(strippedHref);
 
 	return (
 		<Link
