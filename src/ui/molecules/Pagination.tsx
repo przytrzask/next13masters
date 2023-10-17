@@ -22,10 +22,9 @@ export const Pagination = ({ alias, count = 0, perpage }: PaginationProps) => {
 					(number) => (
 						<ActiveLink
 							key={number.toString()}
-							activeClassName="inline-flex items-center border-t-2 border-indigo-500 px-4 pt-4 text-sm font-medium text-indigo-600"
+							activeClassName="inline-flex items-center border-t-2 border-indigo-400 px-4 pt-4 text-sm font-medium text-indigo-600"
 							className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
 							href={`/${alias}/${number}?${searchParams.toString()}`}
-							exact={false}
 						>
 							{number.toString()}
 						</ActiveLink>
