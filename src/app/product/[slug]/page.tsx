@@ -12,6 +12,7 @@ import { addProductToCart, getOrCreateCart } from "@/api/orders";
 import { type SizeType, type ColorType } from "@/gql/graphql";
 import { ProductReviewsList } from "@/ui/organisms/ProductReviewsList";
 import { ProductReviewsForm } from "@/ui/organisms/ProductReviewsForm";
+import { formatMoney } from "@/ui/utils";
 
 type Params = {
 	params: {
@@ -73,9 +74,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
 				<div className="sticky col-span-5 mt-10 px-4 sm:mt-16 sm:px-0 lg:inset-y-4  lg:mt-0">
 					<div className="flex items-center justify-between">
 						<h1 className="text-2xl text-gray-900">{product.name}</h1>
-						<p className="fnt-medium text-xl text-gray-900">
-							{product.price} <b>$ </b>
-						</p>
+						<p className="fnt-medium text-xl text-gray-900">{formatMoney(product.price)}</p>
 					</div>
 					<form action={addToCartFunction}>
 						<Suspense>

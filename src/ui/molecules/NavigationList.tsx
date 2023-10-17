@@ -1,10 +1,12 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Image from "next/image";
+import { Suspense } from "react";
 import { ActiveLink } from "../atoms/ActiveLink";
 import { Login } from "../organisms/Login";
 import { SearchInput } from "../atoms/SearchInput";
 import { CartLink } from "./CartLink";
+import { Hamburger } from "./Hamburger";
 import { type Database } from "@/types/supabase";
 
 const navigation = [
@@ -52,6 +54,9 @@ export const NavigationList = async () => {
 		<div className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
 			<nav aria-label="Global navigation">
 				<div className="flex flex-1">
+					<Suspense>
+						<Hamburger />
+					</Suspense>
 					<div className="hidden lg:flex lg:gap-x-12">
 						{navigation.map((item) => (
 							<ActiveLink

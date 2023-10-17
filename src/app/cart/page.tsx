@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { IncrementDecrementItem } from "./IncrementDecrementItem";
 import { RemoveButton } from "./DeleteButton";
+import { handleStripePaymentAction } from "./actions";
 import { getCartFromCookies } from "@/api/orders";
 import { formatMoney } from "@/ui/utils";
 
@@ -125,7 +126,7 @@ export default async function Cart() {
 							</div>
 						</dl>
 
-						{/* <form
+						<form
 							action={async () => {
 								"use server";
 								await handleStripePaymentAction();
@@ -139,7 +140,7 @@ export default async function Cart() {
 							>
 								Checkout
 							</button>
-						</form> */}
+						</form>
 					</section>
 				</div>
 			</div>
