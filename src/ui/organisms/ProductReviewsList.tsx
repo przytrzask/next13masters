@@ -1,11 +1,14 @@
 import { StarIcon } from "@heroicons/react/20/solid";
 
 import clsx from "clsx";
+import Image from "next/image";
 import { getReviewsByProductId } from "@/api/reviews";
 
 type ProductReviewsListProps = {
 	productId: string;
 };
+
+const avatarsSrc = ["/avatars/1.webp", "/avatars/2.webp", "/avatars/3.webp"] as const;
 
 export const ProductReviewsList = async ({ productId }: ProductReviewsListProps) => {
 	if (!productId) return null;
@@ -17,14 +20,16 @@ export const ProductReviewsList = async ({ productId }: ProductReviewsListProps)
 			<div className="flow-root">
 				<div className="my-12 divide-y divide-gray-200">
 					<h3>User reviews</h3>
-					{realReviews.map((review) => (
+					{realReviews.map((review, idx) => (
 						<div key={review.id} className="py-12">
 							<div className="flex items-center">
-								{/* <img
-									src={review.avatarSrc}
-									alt={`${review.author}.`}
+								<Image
+									width={48}
+									height={48}
+									src={avatarsSrc[idx % avatarsSrc.length] ?? "/avatars/1.webp"}
+									alt={`${review.user?.name}.`}
 									className="h-12 w-12 rounded-full"
-								/> */}
+								/>
 								<div className="ml-4">
 									<h4 className="text-sm font-bold text-gray-900">{review.user?.name}</h4>
 									<div className="mt-1 flex items-center">

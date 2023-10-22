@@ -38,6 +38,9 @@ export const getProductsList = async ({
 			...(search && { search }),
 			...(orderBy && { orderBy }),
 		},
+		next: {
+			revalidate: 1800,
+		},
 	});
 
 	return graphqlResponse.products;
