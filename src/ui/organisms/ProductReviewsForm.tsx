@@ -41,7 +41,7 @@ export const ProductReviewsForm = ({ productId }: { productId: string }) => {
 
 			revalidateTag("reviews");
 		} else {
-			// TODO KURWA
+			console.error(parsed.error);
 		}
 	};
 
@@ -60,7 +60,7 @@ export const ProductReviewsForm = ({ productId }: { productId: string }) => {
 						type="text"
 						name="name"
 						id="name"
-						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-transparent sm:text-sm sm:leading-6 "
+						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6 "
 						placeholder="Jane Smith"
 						required
 					/>
@@ -74,13 +74,13 @@ export const ProductReviewsForm = ({ productId }: { productId: string }) => {
 						type="email"
 						name="email"
 						id="email"
-						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
 						placeholder="Jane Smith"
 						required
 					/>
 				</div>
 
-				<div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-indigo-600">
+				<div className="relative rounded-md rounded-b-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-indigo-600 focus:outline-none">
 					<label htmlFor="headline" className="block text-xs font-medium text-gray-900">
 						Title
 					</label>
@@ -88,12 +88,12 @@ export const ProductReviewsForm = ({ productId }: { productId: string }) => {
 						type="text"
 						name="headline"
 						id="headline"
-						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
 						placeholder="Jane Smith"
 						required
 					/>
 				</div>
-				<div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-indigo-600">
+				<div className="relative rounded-md rounded-t-none px-3 pb-1.5 pt-2.5 ring-1 ring-inset ring-gray-300 focus-within:z-10 focus-within:ring-2 focus-within:ring-indigo-600 ">
 					<label htmlFor="content" className="block text-xs font-medium text-gray-900">
 						Description
 					</label>
@@ -101,7 +101,7 @@ export const ProductReviewsForm = ({ productId }: { productId: string }) => {
 						type="text"
 						name="content"
 						id="content"
-						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
 						placeholder="Nice one"
 						required
 					/>
@@ -114,7 +114,7 @@ export const ProductReviewsForm = ({ productId }: { productId: string }) => {
 					<select
 						name="rating"
 						id="rating"
-						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+						className="block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
 						placeholder="Head of Tomfoolery"
 					>
 						<option value="5">5</option>
